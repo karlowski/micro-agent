@@ -1,0 +1,1 @@
+export const nodesConfig: string[] = ['agent', 'tool', 'responder'];
