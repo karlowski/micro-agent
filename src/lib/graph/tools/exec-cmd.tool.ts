@@ -1,14 +1,14 @@
 import { tool } from '@langchain/core/tools';
 
 import { runCommand } from '../../../utils/cmd-runner.js';
-import { parseCommand, validateCommand } from '../../../utils/cmd-runner.js';
+import { parseCommand, isCommandAllowed } from '../../../utils/cmd-runner.js';
 
 export default async () => {
   return tool(
     async ({ input }: { input: string }) => {
       const { cmd, args } = parseCommand(input);
 
-      if (!validateCommand(cmd)) {
+      if (!isCommandAllowed(cmd)) {
         throw new Error('Command not allowed');
       }
 

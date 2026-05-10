@@ -8,7 +8,7 @@ export const parseCommand = (input: string) => {
   return { cmd, args };
 };
 
-export const validateCommand = (cmd: string) => {
+export const isCommandAllowed = (cmd: string) => {
   return ALLOWED_CMDS.has(cmd);
 };
 
