@@ -1,6 +1,6 @@
 import { execFile } from 'child_process';
 
-const ALLOWED_CMDS = new Set(['ls', 'cat', 'pwd', 'top', 'free', 'find']); // TODO: customize..?
+const ALLOWED_CMDS = new Set(['ls', 'cat', 'pwd', 'top', 'free', 'find', 'grep']); // TODO: customize..?
 
 export const parseCommand = (input: string) => {
   const [cmd, ...args] = input.trim().split(/\s+/);

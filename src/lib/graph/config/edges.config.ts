@@ -23,7 +23,7 @@ interface ConditionalEdge extends BaseEdge {
 export type GraphEdge = SimpleEdge | ConditionalEdge;
 
 type EdgeHandler = (
-  workflow: StateGraph<typeof GraphState>, 
+  workflow: StateGraph<typeof GraphState>,
   edge: any
 ) => void;
 
@@ -42,13 +42,39 @@ export const edgeHandlers: Record<EdgeType, EdgeHandler> = {
 };
 
 export const edgesConfig: GraphEdge[] = [
-  { type: 'simple', source: START, target: 'agent' },
-  { 
-    type: 'conditional', 
-    source: 'agent', 
-    router: (state: State) => (state.lastToolCall ? 'tool' : 'responder'), 
-    mapping: { tool: 'tool', responder: 'responder' } 
+  {
+    type: 'simple',
+    source: START,
+    target: 'agent',
   },
-  { type: 'simple', source: 'tool', target: 'agent' },
-  { type: 'simple', source: 'responder', target: END },
+  {
+    type: 'conditional',
+    source: 'agent',
+    router: (state: State) => {
+      if (state.iterations >= 5) return 'responder';
+
+      if (state.pendingToolCall) return 'tool';
+
+      const lastToolCall = state.toolHistory.at(-1); 
+      if (!lastToolCall?.success && lastToolCall?.error) {
+        return 'agent';
+      }
+
+      return 'responder';
+    },
+    mapping: {
+      tool: 'tool',
+      responder: 'responder',
+    },
+  },
+  {
+    type: 'simple',
+    source: 'tool',
+    target: 'agent',
+  },
+  {
+    type: 'simple',
+    source: 'responder',
+    target: END,
+  },
 ];

@@ -33,7 +33,7 @@ export const createGraphInvoker = (graph: any) => {
   return async (input: string) => {
     return graph.invoke({
       input,
-      lastToolCall: null,
+      pendingToolCall: null,
       context: [],
       output: '',
       toolHistory: [],

@@ -27,3 +27,32 @@ export default async () => {
     }
   );
 }
+
+// export default async () => {
+//   return tool(
+//     async ({ cmd, args }: { cmd: string; args: string[] }) => {
+//       console.log({ cmd, args });
+
+//       if (!isCommandAllowed(cmd)) {
+//         throw new Error('Command not allowed');
+//       }
+
+//       return await runCommand(cmd, args);
+//     },
+//     {
+//       name: 'exec-cmd',
+//       description: 'Runs "exec" with whitelisted system commands',
+//       schema: {
+//         type: 'object',
+//         properties: {
+//           cmd: { type: 'string' },
+//           args: {
+//             type: 'array',
+//             items: { type: 'string' }
+//           }
+//         },
+//         required: ['cmd', 'args']
+//       }
+//     }
+//   );
+// }
