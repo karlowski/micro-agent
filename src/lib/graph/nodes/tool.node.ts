@@ -16,20 +16,21 @@ export default async (state: State) => {
     const result = await tool.invoke(toolCall.args);
 
     return {
-      context: [String(result)],
+      context: [JSON.stringify(result)],
       toolHistory: [
         {
           name: toolCall.name,
           args: toolCall.args,
-          result: String(result),
+          result: JSON.stringify(result),
           success: true,
         }
       ],
       pendingToolCall: null,
+      toolIterations: 1
     };
   } catch (error) {
     return {
-      context: [`Tool error: ${JSON.stringify(error)}`],
+      context: [`Tool error. Try different command. Error: ${JSON.stringify(error)}`],
       toolHistory: [
         {
           name: toolCall.name,
@@ -39,6 +40,7 @@ export default async (state: State) => {
         }
       ],
       pendingToolCall: null,
+      toolIterations: 1
     };
   }
 };

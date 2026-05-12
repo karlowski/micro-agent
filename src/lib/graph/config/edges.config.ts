@@ -51,9 +51,13 @@ export const edgesConfig: GraphEdge[] = [
     type: 'conditional',
     source: 'agent',
     router: (state: State) => {
-      if (state.iterations >= 5) return 'responder';
+      if (state.toolIterations >= 5) {
+        return 'responder';
+      }
 
-      if (state.pendingToolCall) return 'tool';
+      if (state.pendingToolCall) {
+        return 'tool';
+      }
 
       const lastToolCall = state.toolHistory.at(-1); 
       if (!lastToolCall?.success && lastToolCall?.error) {
@@ -63,6 +67,7 @@ export const edgesConfig: GraphEdge[] = [
       return 'responder';
     },
     mapping: {
+      agent: 'agent',
       tool: 'tool',
       responder: 'responder',
     },

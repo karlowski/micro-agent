@@ -14,7 +14,7 @@ export const GraphState = Annotation.Root({
     reducer: (old, next) => old.concat(next),
     default: () => [],
   }),
-  iterations: Annotation<number>({
+  toolIterations: Annotation<number>({
     reducer: (i, next) => i + next,
     default: () => 0,
   }),

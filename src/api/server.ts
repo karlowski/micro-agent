@@ -14,7 +14,7 @@ const readBody = (req: IncomingMessage): Promise<string> => {
 
 export const createHttpServer = (handler: Function): Server => {
   return createServer(async (req: IncomingMessage, res: ServerResponse) => {
-    if (req.method !== 'POST' || req.url !== '/endpoint') {
+    if (req.method !== 'POST' || req.url !== '/question') {
       res.writeHead(404);
       return res.end();
     }
@@ -32,9 +32,9 @@ export const createHttpServer = (handler: Function): Server => {
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ result }));
-    } catch {
+    } catch(error) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'invalid json' }));
+      res.end(JSON.stringify({ error }));
     }
   });
 }
