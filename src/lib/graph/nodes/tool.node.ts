@@ -12,6 +12,7 @@ export default async (state: State) => {
     throw new Error(`No tool was found, searching: ${toolCall.name}`)
   }
 
+  // TODO: error-handling according to new tools response flow
   try {
     const result = await tool.invoke(toolCall.args);
 

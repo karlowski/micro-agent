@@ -2,10 +2,11 @@ import { tool } from '@langchain/core/tools';
 
 import { parsePipeline, runPipeline } from '../../../utils/cmd-runner.js';
 import { isCommandAllowed } from '../../../utils/cmd-runner.js';
+import { ToolExecutionResponse } from '../types/tool.types.js';
 
 export default async () => {
   return tool(
-    async ({ input }: { input: string }) => {
+    async ({ input }: { input: string }): Promise<ToolExecutionResponse> => {
       const pipeline = parsePipeline(input);
 
       for (const command of pipeline) {
@@ -15,7 +16,20 @@ export default async () => {
         }
       }
 
-      return runPipeline(pipeline);
+      try {
+        const result = await runPipeline(pipeline);
+
+        return {
+          success: true,
+          message: `command "${input}" executed successfully, the result is at "payload"`,
+          payload: result
+        }
+      } catch (error) {
+        return {
+          success: false,
+          message: String(error)
+        }
+      }
     },
     {
       name: 'cmd',
