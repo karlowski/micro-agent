@@ -30,7 +30,7 @@ export default async (state: State) => {
     };
   } catch (error) {
     return {
-      context: [`Tool error. Try different command. Error: ${JSON.stringify(error)}`],
+      context: [`Tool error. Try different command. Error: ${String(error)}`],
       toolHistory: [
         {
           name: toolCall.name,

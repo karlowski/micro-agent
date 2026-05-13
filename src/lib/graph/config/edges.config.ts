@@ -60,7 +60,7 @@ export const edgesConfig: GraphEdge[] = [
       }
 
       const lastToolCall = state.toolHistory.at(-1); 
-      if (!lastToolCall?.success && lastToolCall?.error) {
+      if (!state.pendingToolCall && (lastToolCall && !lastToolCall.success && lastToolCall.error)) {
         return 'agent';
       }
 

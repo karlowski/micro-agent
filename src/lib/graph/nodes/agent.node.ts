@@ -7,7 +7,7 @@ export default async (state: State) => {
   const messages = [
     { role: 'system', content: 'You are locally-running LLM connected to agent features. Use tools when necessary but DO NOT try any commands repeadly in the same fashion when hit the error' },
     { role: 'user', content: state.input },
-    ...state.context.map(c => ({ role: 'system', content: `Context: ${c}` }))
+    ...state.context.map(c => ({ role: 'system', content: `Context: ${String(c)}` }))
   ];
 
   try {
